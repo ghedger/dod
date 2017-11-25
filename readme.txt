@@ -8,6 +8,7 @@ Dan Gendreau: Graphics, sound, and cheat enhancements
 Tim Lindner: WAV files
 Michael Spencer: Discussion Forum Host
 Louis Jordan: Inspirer of the 'Adventure Survivors'
+Greg Hedger: Optimization
 
 ==========
 
