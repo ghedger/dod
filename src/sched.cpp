@@ -40,6 +40,8 @@ extern Player	player;
 extern Viewer	viewer;
 extern OS_Link	oslink;
 
+const int JIFFYTIME = 17;
+
 // Constructor
 Scheduler::Scheduler()
 {
@@ -84,11 +86,11 @@ void Scheduler::SYSTCB()
 	TCBPTR = 0;
 
 	TCBLND[0].type = TID_CLOCK;
-	TCBLND[0].frequency = 17;		// One JIFFY
+	TCBLND[0].frequency = JIFFYTIME;		// One JIFFY
 	TCBindex = GETTCB();
 
 	TCBLND[1].type = TID_PLAYER;
-	TCBLND[1].frequency = 17;		// One JIFFY
+	TCBLND[1].frequency = JIFFYTIME;		// One JIFFY
 	TCBindex = GETTCB();
 
 	TCBLND[2].type = TID_REFRESH_DISP;
@@ -227,18 +229,19 @@ void Scheduler::CLOCK()
 	elapsedTime = curTime - TCBLND[0].prev_time;
 	
 	// Reality check
-	if (elapsedTime > 126 * 17)
+  // GPH: What's the meaning of 126?
+	if (elapsedTime > 126 * JIFFYTIME)
 	{
-		elapsedTime = 126 * 17;
+		elapsedTime = 126 * JIFFYTIME;
 	}
 
-	if (elapsedTime >= 17)
+	if (elapsedTime >= JIFFYTIME)
 	{
 		// Update Task's prev_time
 		TCBLND[0].prev_time = curTime;	
 		if (player.HBEATF != 0)
 		{
-			player.HEARTC -= (elapsedTime / 17);
+			player.HEARTC -= (elapsedTime / JIFFYTIME);
 			if ((player.HEARTC & 0x80) != 0)
 			{
 				player.HEARTC = 0;
@@ -246,7 +249,7 @@ void Scheduler::CLOCK()
 			if (player.HEARTC == 0)
 			{
 				player.HEARTC = player.HEARTR;
-				
+
 				// make sound
 				Mix_PlayChannel(hrtChannel, hrtSound[(dodBYTE) (player.HEARTS + 1)], 0);
 				while (Mix_Playing(hrtChannel) == 1) ; // !!!
