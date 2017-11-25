@@ -14,6 +14,7 @@ is held by Douglas J. Morgan.
 //
 // Implementation of Creature class
 
+#include <unistd.h>
 #include "creature.h"
 #include "dodgame.h"
 #include "dungeon.h"
@@ -315,6 +316,7 @@ int Creature::CMOVE(int task, int cidx)
 		// ignore dead creatures
 		if (CCBLND[cidx].P_CCUSE == 0)
 		{
+			scheduler.TCBLND[task].next_time = scheduler.curTime + 1000;
 			return 0;
 		}
 
@@ -369,9 +371,13 @@ int Creature::CMOVE(int task, int cidx)
 					scheduler.CLOCK();
 					if (game.AUTFLG && game.demoRestart == false)
 					{
+						scheduler.TCBLND[task].next_time = scheduler.curTime +
+						CCBLND[cidx].P_CCTMV;
+        
 						return 0;
 					}
 				}
+				usleep(1000);
 				scheduler.curTime = SDL_GetTicks();
 			}
 
@@ -421,9 +427,12 @@ int Creature::CMOVE(int task, int cidx)
 							scheduler.CLOCK();
 							if (game.AUTFLG && game.demoRestart == false)
 							{
+								scheduler.TCBLND[task].next_time = scheduler.curTime +
+									CCBLND[cidx].P_CCTMV;
 								return 0;
 							}
 						}
+						usleep(1000);
 						scheduler.curTime = SDL_GetTicks();
 					}
 
@@ -728,6 +737,7 @@ bool Creature::CWALK(dodBYTE dir, CCB * cr)
 				{
 					scheduler.CLOCK();
 				}
+				usleep(1000);
 				scheduler.curTime = SDL_GetTicks();
 			}
 		}

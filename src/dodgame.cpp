@@ -16,6 +16,7 @@ is held by Douglas J. Morgan.
 
 //#include <stdio.h>
 
+#include <unistd.h>
 #include "dodgame.h"
 #include "player.h"
 #include "object.h"
@@ -145,6 +146,7 @@ void dodGame::COMINI()
 	{
 		oslink.process_events();
 		ticks2 = SDL_GetTicks();
+		usleep(10000);
 	} while (ticks2 < ticks1 + viewer.prepPause);
 	
 	creature.NEWLVL();
@@ -161,6 +163,7 @@ void dodGame::COMINI()
 		{
 			oslink.process_events();
 			ticks2 = SDL_GetTicks();
+		usleep(500000);
 		} while (ticks2 < ticks1 + 3000);
 	}
 	INIVU();
@@ -195,6 +198,7 @@ void dodGame::Restart()
 	{
 		oslink.process_events();
 		ticks2 = SDL_GetTicks();
+		usleep(500000);
 	} while (ticks2 < ticks1 + 2500);
 	
 	creature.NEWLVL();
@@ -243,6 +247,7 @@ void dodGame::WAIT()
 			}
 			scheduler.EscCheck();
 		}
+		usleep(1500000);
 		scheduler.curTime = SDL_GetTicks();
 	} while (scheduler.curTime < ticks1 + 1500);
 }

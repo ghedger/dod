@@ -14,6 +14,7 @@ is held by Douglas J. Morgan.
 //
 // Implementation of the Scheduler class
 
+#include <unistd.h>
 #include <iostream>
 #include <fstream>
 
@@ -118,6 +119,8 @@ void Scheduler::SCHED()
 	// Initialization
 	int	result = 0;  // not currently being used
 	int	ctr = 0;
+	Uint32 next_time_lwm;
+	next_time_lwm = 0xffffffff;
 
 	// Main game execution loop
 	do
@@ -155,7 +158,30 @@ void Scheduler::SCHED()
 			}
 		}
 
-		(ctr < TCBPTR) ? ++ctr : ctr = 0;
+		// Keep a low water mark of the soonest next event.
+		if (TCBLND[ctr].next_time && (TCBLND[ctr].next_time < next_time_lwm))
+		{
+			next_time_lwm = TCBLND[ctr].next_time;
+		}
+
+		// increment task control block index w/wrapping
+		if (ctr < TCBPTR) {
+			++ctr;
+		} else {
+			// Reset task index for next loop iteration
+			ctr = 0;
+
+			// Sleep for the difference
+			if( next_time_lwm > curTime) {
+				usleep( (next_time_lwm - curTime) * 1000);
+			}
+
+			// Schedule next loop update for soonest next task
+
+			// Reset low water mark for next loop iteration
+			next_time_lwm = 0xffffffff;
+		}
+		//(ctr < TCBPTR) ? ++ctr : { ctr = 0; usleep(200) };
 
 		if (ZFLAG != 0) // Saving or Loading
 		{

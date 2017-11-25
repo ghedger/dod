@@ -14,6 +14,7 @@ is held by Douglas J. Morgan.
 //
 // Implementation of Player class
 
+#include <unistd.h>
 #include "player.h"
 #include "dodgame.h"
 #include "viewer.h"
@@ -368,6 +369,7 @@ void Player::HUPDAT()
 						scheduler.CLOCK();
 						scheduler.EscCheck();
 					}
+					usleep(1000);
 					scheduler.curTime = SDL_GetTicks();
 				} while (scheduler.curTime < ticks1 + 750);
 			} while (viewer.RLIGHT != 248);	// not equal to -8
@@ -397,6 +399,7 @@ void Player::HUPDAT()
 						scheduler.CLOCK();
 						scheduler.EscCheck();
 					}
+					usleep(1000);
 					scheduler.curTime = SDL_GetTicks();
 				} while (scheduler.curTime < ticks1 + 750);
 			} while (viewer.RLIGHT != viewer.OLIGHT);
@@ -629,6 +632,7 @@ void Player::PATTK()
 				return;
 			}
 		}
+		usleep(1000);
 		scheduler.curTime = SDL_GetTicks();
 	}
 
@@ -681,6 +685,7 @@ void Player::PATTK()
 				return;
 			}
 		}
+		usleep(1000);
 		scheduler.curTime = SDL_GetTicks();
 	}
 
@@ -723,6 +728,7 @@ void Player::PATTK()
 				return;
 			}
 		}
+		usleep(1000);
 		scheduler.curTime = SDL_GetTicks();
 	}
 
@@ -743,6 +749,7 @@ void Player::PATTK()
 		ticks1 = SDL_GetTicks();
 		do
 		{
+			usleep(wizDelay * 1000);
 			ticks2 = SDL_GetTicks();
 		} while (ticks2 < ticks1 + wizDelay);
 		
@@ -800,6 +807,7 @@ void Player::PATTK()
 
 	if (creature.CCBLND[cidx].creature_id != Creature::CRT_WIZARD)
 	{
+		// It's a regular creature, not the wizard...
 		HUPDAT();
 		if (game.CreaturesInstaRegen) creature.CREGEN();  //Regen creature intantly after death if option selected.
 		return;
@@ -926,6 +934,7 @@ void Player::PCLIMB()
 					{
 						scheduler.CLOCK();
 					}
+ 					usleep(viewer.prepPause * 1000);
 					scheduler.curTime = SDL_GetTicks();
 				} while (scheduler.curTime < ticks1 + viewer.prepPause);
 				viewer.display_mode = temp;
@@ -956,6 +965,7 @@ void Player::PCLIMB()
 					{
 						scheduler.CLOCK();
 					}
+					usleep(viewer.prepPause * 1000);
 					scheduler.curTime = SDL_GetTicks();
 				} while (scheduler.curTime < ticks1 + viewer.prepPause);
 				viewer.display_mode = temp;
@@ -1135,6 +1145,7 @@ void Player::PINCAN()
 					{
 						scheduler.CLOCK();
 					}
+					usleep(1000);
 					scheduler.curTime = SDL_GetTicks();
 				}
 				
@@ -1153,6 +1164,7 @@ void Player::PINCAN()
 					ticks1 = SDL_GetTicks();
 					do
 					{
+					usleep(wizDelay * 1000);
 						ticks2 = SDL_GetTicks();
 					} while (ticks2 < ticks1 + wizDelay);
 
@@ -1187,6 +1199,7 @@ void Player::PINCAN()
 					{
 						scheduler.CLOCK();
 					}
+					usleep(1000);
 					scheduler.curTime = SDL_GetTicks();
 				}
 				
@@ -1205,6 +1218,7 @@ void Player::PINCAN()
 					ticks1 = SDL_GetTicks();
 					do
 					{
+						usleep(wizDelay * 1000);
 						ticks2 = SDL_GetTicks();
 					} while (ticks2 < ticks1 + wizDelay);
 
@@ -1259,6 +1273,7 @@ void Player::PMOVE()
 					return;
 				}
 			}
+			usleep(1000);
 			scheduler.curTime = SDL_GetTicks();
 		} while (scheduler.curTime < ticks1 + (moveDelay / 2));
 		viewer.HLFSTP = 0;
@@ -1279,6 +1294,7 @@ void Player::PMOVE()
 					return;
 				}
 			}
+			usleep(1000);
 			scheduler.curTime = SDL_GetTicks();
 		} while (scheduler.curTime < ticks1 + (moveDelay / 2));
 		return;
@@ -1301,6 +1317,7 @@ void Player::PMOVE()
 				}
 
 			}
+			usleep(1000);
 			scheduler.curTime = SDL_GetTicks();
 		} while (scheduler.curTime < ticks1 + (moveDelay / 2));
 		viewer.BAKSTP = 0;
@@ -1321,6 +1338,7 @@ void Player::PMOVE()
 					return;
 				}
 			}
+			usleep(1000);
 			scheduler.curTime = SDL_GetTicks();
 		} while (scheduler.curTime < ticks1 + (moveDelay / 2));
 		return;
@@ -1665,6 +1683,7 @@ void Player::ShowTurn(dodBYTE A)
 					SDL_GL_SwapBuffers();
 					redraw = false;
 				}
+			usleep(turnDelay * 1000);
 			} while (scheduler.curTime < ticks1 + turnDelay);
 		}
 	}
@@ -1725,6 +1744,7 @@ void Player::PUSE()
 			{
 				scheduler.CLOCK();
 			}
+			usleep(1000);
 			scheduler.curTime = SDL_GetTicks();
 		}
 		
@@ -1746,6 +1766,7 @@ void Player::PUSE()
 			{
 				scheduler.CLOCK();
 			}
+			usleep(1000);
 			scheduler.curTime = SDL_GetTicks();
 		}
 		
@@ -1767,6 +1788,7 @@ void Player::PUSE()
 			{
 				scheduler.CLOCK();
 			}
+			usleep(1000);
 			scheduler.curTime = SDL_GetTicks();
 		}
 		
@@ -1790,6 +1812,7 @@ void Player::PUSE()
 			{
 				scheduler.CLOCK();
 			}
+			usleep(1000);
 			scheduler.curTime = SDL_GetTicks();
 		}
 		
@@ -1813,6 +1836,7 @@ void Player::PUSE()
 			{
 				scheduler.CLOCK();
 			}
+			usleep(1000);
 			scheduler.curTime = SDL_GetTicks();
 		}
 		
@@ -1838,6 +1862,7 @@ void Player::PUSE()
 			{
 				scheduler.CLOCK();
 			}
+			usleep(1000);
 			scheduler.curTime = SDL_GetTicks();
 		}
 		
@@ -1938,6 +1963,7 @@ bool Player::PSTEP(dodBYTE dir)
 			{
 				scheduler.CLOCK();
 			}
+			usleep(1000);
 			scheduler.curTime = SDL_GetTicks();
 		}
 		
