@@ -72,6 +72,7 @@ void Scheduler::LoadSounds()
   hrtSound[1] = Utils::LoadSound("18_heart.wav");
 }
 
+
 // Creates initial Task Blocks
 void Scheduler::SYSTCB()
 {

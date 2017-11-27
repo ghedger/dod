@@ -29,6 +29,7 @@ using namespace std;
 #include "dodobject.h"
 #include "creature.h"
 #include "enhanced.h"
+#include "dodconfig.h"
 
 extern Creature    creature;
 extern Object    object;
@@ -77,6 +78,16 @@ OS_Link::OS_Link() :
 void OS_Link::init()
 {
   printf("Starting OS_Link::init()\n");
+
+  // Validate local user configuration directory structure; if not, copy them over from
+  // install location ("/etc/dungeons_of_daggorath/")
+  DODConfig config;
+
+  // Set the directory from which we'll load our config files.
+  config.ValidateUserDirectory();
+  config.ChangeToUserDirectory();
+
+
   loadOptFile();
 
   Uint32 ticks1, ticks2;
@@ -100,7 +111,7 @@ void OS_Link::init()
 
   Mix_AllocateChannels(4);
   Mix_Volume(-1, MIX_MAX_VOLUME);
-  
+
   info = SDL_GetVideoInfo();
   if(!info)
   {
@@ -458,13 +469,16 @@ switch(menu_id)
    switch(menu_list(menu_id * 5, item + 2, Menu.getMenuItem(menu_id, item), menuList, 2))
     {
     case 0:
-      if(!FullScreen)
+      if(!FullScreen) {
        changeFullScreen();
+       saveOptFile();
+      }
       break;
 
     case 1:
       if(FullScreen)
        changeFullScreen();
+       saveOptFile();
       break;
 
     default:
@@ -484,18 +498,22 @@ switch(menu_id)
     {
     case 0:
      changeVideoRes(640);
+     saveOptFile();
      break;
 
     case 1:
      changeVideoRes(800);
+     saveOptFile();
      break;
 
     case 2:
      changeVideoRes(1024);
+     saveOptFile();
      break;
 
     case 3:
      changeVideoRes(1280);
+     saveOptFile();
      break;
 
     default:
@@ -515,16 +533,19 @@ switch(menu_id)
     {
     case 0:
      g_options &= ~(OPT_VECTOR|OPT_HIRES);
+     saveOptFile();
      break;
 
     case 1:
      g_options &= ~(OPT_VECTOR);
      g_options |= OPT_HIRES;
+     saveOptFile();
      break;
 
     case 2:
      g_options &= ~(OPT_HIRES);
      g_options |= OPT_VECTOR;
+     saveOptFile();
      break;
 
     default:
@@ -955,15 +976,17 @@ void OS_Link::menu_string(char *newString, const char *title, size_t maxLength)
 void OS_Link::loadOptFile(void)
  {
  char     inputString[80];
- char     fn[MAX_FILENAME_LENGTH];
  int      in;
  ifstream fin;
  char *   breakPoint;
 
  loadDefaults(); // In case some variables aren't in the opts file, and if no file exists
 
- sprintf(fn, "%s%s%s", confDir, pathSep, "opts.ini");
-  
+ DODConfig config;
+ const char *fn = config.GetOptsFilePath();
+
+ // sprintf(fn, "%s%s%s", confDir, pathSep, "opts.ini");
+
  fin.open(fn);
  if (!fin)
  {
@@ -1083,9 +1106,9 @@ void OS_Link::loadOptFile(void)
 bool OS_Link::saveOptFile(void)
  {
  ofstream fout;
- char     fn[MAX_FILENAME_LENGTH];
 
- sprintf(fn, "%s%s%s", confDir, pathSep, "opts.ini");
+ DODConfig config;
+ const char *fn = config.GetOptsFilePath();
 
  fout.open(fn);
  if(!fout)
@@ -1140,7 +1163,7 @@ void OS_Link::loadDefaults(void)
  volumeLevel = MIX_MAX_VOLUME;
  creature.creSpeedMul = 200;
  creature.UpdateCreSpeed();
- strcpy(savedDir, "/etc/dungeons_of_daggorath/saved");
+ strcpy(savedDir, INSTALL_DIRECTORY_NAME SAVED_DIRECTORY_NAME);
  FullScreen = true;
  width = 1024;
  creatureRegen = 5;

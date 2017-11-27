@@ -160,6 +160,5 @@ Mix_Chunk *Utils::LoadSound(const char *snd)
 {
   char fn[256];
   sprintf(fn, "%s%s%s", oslink.soundDir, oslink.pathSep, snd);
-  printf("%s\n\n", fn);
   return Mix_LoadWAV(fn);
 }

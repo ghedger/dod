@@ -30,8 +30,7 @@ is held by Douglas J. Morgan.
 
 #include "dod.h"
 
- // Arbitrary Length of 80, maybe be changed if needed
-#define MAX_FILENAME_LENGTH 255 
+ // Arbitrary Length of 255, maybe be changed if needed
 class OS_Link
 {
 public:

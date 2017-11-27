@@ -24,7 +24,6 @@ class Scheduler
 public:
   // Constructor
   Scheduler();
-
   // Scaffolding
   //void    printTrace(char * st, int rout);
   //void    printClock();

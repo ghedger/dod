@@ -39,6 +39,17 @@ is held by Douglas J. Morgan.
 #define GetTickCount() time(NULL)
 #endif
 
+// User configuration and file constants.  NOTE, putting these
+// here to avoid circular dependency problems with putting them
+// in oslink.
+#define USER_DIRECTORY_NAME "/dungeons_of_daggorath/"
+#define CONF_DIRECTORY_NAME "/conf/"
+#define SOUND_DIRECTORY_NAME "/sound/"
+#define SAVED_DIRECTORY_NAME "/saved/"
+#define INSTALL_DIRECTORY_NAME "/etc/dungeons_of_daggorath/"
+#define OPTS_FILE_NAME "opts.ini"
+#define MAX_FILENAME_LENGTH 255
+
 // The original source code used mostly 8-bit bytes and 16-bit
 // words for RAM variable storages.  Many of the operations in
 // the source are bit-level so there is a need to have precise
