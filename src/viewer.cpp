@@ -38,9 +38,13 @@ extern Scheduler	scheduler;
 int ClearColor = 0;
 
 // Constructor
-Viewer::Viewer() : VCNTRX(128), VCNTRY(76),
-				   fadChannel(3), buzzStep(300), midPause(2500),
-				   prepPause(2500)
+Viewer::Viewer() : 
+  fadChannel(3),
+  buzzStep(300),
+  midPause(2500),
+	prepPause(2500),
+  VCNTRX(128),
+  VCNTRY(76)
 {
 	Utils::LoadFromDecDigit(A_VLA, "411212717516167572757582823535424");
 	Utils::LoadFromDecDigit(B_VLA, "6112128182151522224545525275758285262645455656757");
@@ -456,7 +460,7 @@ bool Viewer::ShowFade(int fadeMode)
 {
 	Uint32 ticks1, ticks2;
 	SDL_Event event;
-	int * wiz;
+	int * wiz = NULL;
 	VXSCAL = 0x80;
 	VYSCAL = 0x80;
 	
@@ -1950,7 +1954,7 @@ char Viewer::dod_to_ascii(dodBYTE c)
 }
 
 // Draws a string
-void Viewer::drawString(int x, int y, char * str, int len)
+void Viewer::drawString(int x, int y, const char * str, int len)
 {
 	int ctr;
 	glLoadIdentity();
@@ -2121,7 +2125,7 @@ void Viewer::drawMenu(menu mainMenu, int menu_id, int highlight)
 
   Function: Draws a menu list
 ****************************************************************/
-void Viewer::drawMenuList(int x, int y, char *title, char *list[], int listSize, int highlight)
+void Viewer::drawMenuList(int x, int y, const char *title, const char *list[], int listSize, int highlight)
  {
  int length;
 
@@ -2168,7 +2172,7 @@ void Viewer::drawMenuList(int x, int y, char *title, char *list[], int listSize,
 
   Function: Draws a menu scroll bar
 ****************************************************************/
-void Viewer::drawMenuScrollbar(char *title, int current)
+void Viewer::drawMenuScrollbar(const char *title, int current)
  {
  int x;
 	
@@ -2207,7 +2211,7 @@ void Viewer::drawMenuScrollbar(char *title, int current)
 
   Function: Draws a menu string box
 ****************************************************************/
-void Viewer::drawMenuStringTitle(char *title)
+void Viewer::drawMenuStringTitle(const char *title)
  {
   // Clear screen
  glColor4fv(bgColor);
@@ -2227,7 +2231,7 @@ void Viewer::drawMenuStringTitle(char *title)
 
   Function: Draws a menu string box
 ****************************************************************/
-void Viewer::drawMenuString(char *currentString)
+void Viewer::drawMenuString(const char *currentString)
  {
  drawString(0, 2, currentString, strlen(currentString));
  drawString(strlen(currentString), 2, "_", 1);

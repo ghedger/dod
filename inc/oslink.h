@@ -70,9 +70,9 @@ private:
 	// Internal Implementation
 	void handle_key_down(SDL_keysym * keysym);	// keyboard handler
 	bool menu_return(int, int, menu);		// Used by main menu
-	int  menu_list(int x, int y, char *title, char *list[], int listSize);
-	void menu_string(char *newString, char *title, int maxLength);
-	int  menu_scrollbar(char *title, int min, int max, int current);
+	int  menu_list(int x, int y, const char *title, const char *list[], int listSize);
+	void menu_string(char *newString, const char *title, size_t maxLength);
+	int  menu_scrollbar(const char *title, int min, int max, int current);
 	void loadOptFile(void);
 	void loadDefaults(void);
 	void changeFullScreen(void);

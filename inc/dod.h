@@ -468,7 +468,7 @@ class Utils
 {
 public:
 	// This could be made into a template someday
-	static void LoadFromHex(dodBYTE * b, char * h)
+	static void LoadFromHex(dodBYTE * b, const char * h)
 	{
 		char hexbuf[3];
 		char * end;
@@ -486,7 +486,7 @@ public:
 	}
 
 	// This could be made into a template someday
-	static void LoadFromHex(int * b, char * h)
+	static void LoadFromHex(int * b, const char * h)
 	{
 		char hexbuf[3];
 		char * end;
@@ -503,7 +503,7 @@ public:
 		}
 	}
 
-	static void LoadFromDecDigit(dodBYTE * b, char * dd)
+	static void LoadFromDecDigit(dodBYTE * b, const char * dd)
 	{
 		while (*dd)
 		{
@@ -511,7 +511,7 @@ public:
 		}
 	}
 
-	static void LoadFromDecDigit(int * b, char * dd)
+	static void LoadFromDecDigit(int * b, const char * dd)
 	{
 		while (*dd)
 		{
@@ -519,7 +519,7 @@ public:
 		}
 	}
 
-	static Mix_Chunk *LoadSound(char *snd);
+	static Mix_Chunk *LoadSound(const char *snd);
 };
 
 /*******************************************************************
@@ -613,7 +613,7 @@ public:
 	 }
 
 	 // Retrieves the menu item specified
-	char *getMenuItem(int menu_id, int item)
+	const char *getMenuItem(int menu_id, int item)
 	 {
 	 switch(menu_id)
 	  {

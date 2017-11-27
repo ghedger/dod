@@ -66,7 +66,7 @@ int main(int argc, char * argv[])
 	return 0;
 }
 
-void printalpha(int * vl, int len, char * name)
+void printalpha(int * vl, int len, const char * name)
 {
 	int ctr;
 	printf("Utils::LoadFromDecDigit(%s, \"", name);
@@ -156,7 +156,7 @@ void printvls()
 */
 }
 
-Mix_Chunk *Utils::LoadSound(char *snd)
+Mix_Chunk *Utils::LoadSound(const char *snd)
 {
 	char fn[256];
 	sprintf(fn, "%s%s%s", oslink.soundDir, oslink.pathSep, snd);

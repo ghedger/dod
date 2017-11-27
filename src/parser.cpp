@@ -137,7 +137,7 @@ int Parser::PARSER(dodBYTE * pTABLE, dodBYTE & A, dodBYTE & B, bool norm)
 {
 	bool	tok;
 	int		U, Xup, Y;
-	dodBYTE	retA, retB;
+	dodBYTE	retA = 0, retB = 0;
 
 	if (norm)
 	{
@@ -301,7 +301,7 @@ EXPAN10:
 
 dodBYTE Parser::GETFIV(dodBYTE * X, int * Xup, dodBYTE * zeroY)
 {
-	dodBYTE		A, B;
+	dodBYTE		A, B = 0;
 	
 	*Xup = 0;
 

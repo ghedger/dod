@@ -203,7 +203,7 @@ void Creature::CBIRTH(dodBYTE typ)
 	CCBLND[u].P_CCROW = rw;
 	CCBLND[u].P_CCCOL = cl;
 
-	TCBindex = scheduler.GETTCB();
+	TCBindex = scheduler.GETNEXTTCB();
 	scheduler.TCBLND[TCBindex].data = u;
 	scheduler.TCBLND[TCBindex].type = Scheduler::TID_CRTMOVE;
 	scheduler.TCBLND[TCBindex].frequency = CCBLND[u].P_CCTMV;

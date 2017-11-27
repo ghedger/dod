@@ -50,8 +50,12 @@ extern Scheduler	scheduler;
 #define D_END			"00"
 
 // Constructor
-dodGame::dodGame() : LEVEL(2), AUTFLG(true), hasWon(false),
-					 DEMOPTR(0), demoRestart(true)
+dodGame::dodGame() : 
+  LEVEL(2),
+  AUTFLG(true),
+  hasWon(false),
+  demoRestart(true),
+	DEMOPTR(0)
 {
 	Utils::LoadFromHex(DEMO_CMDS,
 //		D_LOOK

@@ -27,6 +27,10 @@ is held by Douglas J. Morgan.
 #include "enhanced.h"
 
 
+// We deal with linked list processing in this file, so must
+// disable this particular warning
+#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
+
 extern OS_Link		oslink;
 extern Creature		creature;
 extern Object		object;
@@ -578,7 +582,7 @@ void Player::setInitialObjects(bool isDemo)
 void Player::PATTK()
 {
 	int res, idx, cidx, optr, val;
-	OCB *U, *Y;
+	OCB *U;
 	dodBYTE r,c;
 	SDL_Event event;
 	Uint32 ticks1, ticks2;
@@ -614,7 +618,6 @@ void Player::PATTK()
 		}
 	}
 
-	Y = U;
 	PMGO = U->P_OCMGO;
 	PPHO = U->P_OCPHO;
 	PDAM += ((PPOW * (((int) PMGO + (int) PPHO) / 8)) >> 7);
@@ -1615,8 +1618,8 @@ void Player::PTURN()
 // Turning Animation
 void Player::ShowTurn(dodBYTE A)
 {
-	int ctr, times, x;
-	int offset, dir;
+	int ctr, times = 0, x;
+  int offset = 0, dir = 0;
 	int inc = 32;
 	int lines = 8;
 	int y0 = 17;

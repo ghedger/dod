@@ -33,7 +33,7 @@ public:
 	void		SYSTCB();
 	void		SCHED();
 	void		CLOCK();
-	int			GETTCB();
+	int			GETNEXTTCB();
 	bool		fadeLoop();
 	void		deathFadeLoop();
 	void		winFadeLoop();
