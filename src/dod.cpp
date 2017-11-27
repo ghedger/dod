@@ -26,13 +26,13 @@ is held by Douglas J. Morgan.
 #include "dod.h"
 #include "dodgame.h"
 #include "player.h"
-#include "object.h"
+#include "dodobject.h"
 #include "creature.h"
 #include "dungeon.h"
-#include "sched.h"
+#include "dodsched.h"
 #include "viewer.h"
 #include "oslink.h"
-#include "parser.h"
+#include "dodparser.h"
 
 dodGame		game;
 Coordinate	crd;

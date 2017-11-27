@@ -19,11 +19,11 @@ is held by Douglas J. Morgan.
 #include <unistd.h>
 #include "dodgame.h"
 #include "player.h"
-#include "object.h"
+#include "dodobject.h"
 #include "viewer.h"
-#include "sched.h"
+#include "dodsched.h"
 #include "creature.h"
-#include "parser.h"
+#include "dodparser.h"
 #include "dungeon.h"
 #include "oslink.h"
 

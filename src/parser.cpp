@@ -14,7 +14,7 @@ is held by Douglas J. Morgan.
 //
 // Implementation of Parser class
 
-#include "parser.h"
+#include "dodparser.h"
 #include "viewer.h"
 
 extern Viewer viewer;

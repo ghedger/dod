@@ -14,9 +14,9 @@ is held by Douglas J. Morgan.
 //
 // Implementation of Object class
 
-#include "object.h"
+#include "dodobject.h"
 #include "dodgame.h"
-#include "parser.h"
+#include "dodparser.h"
 #include "oslink.h"
 
 extern OS_Link	oslink;

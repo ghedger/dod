@@ -1,7 +1,7 @@
 #include <ctype.h>
 #include "oslink.h"
 #include "dodgame.h"
-#include "parser.h"
+#include "dodparser.h"
 #include "enhanced.h"
 
 extern OS_Link	oslink;

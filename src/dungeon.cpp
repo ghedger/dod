@@ -17,7 +17,7 @@ is held by Douglas J. Morgan.
 #include "dungeon.h"
 #include "dodgame.h"
 #include "player.h"
-#include "sched.h"
+#include "dodsched.h"
 
 extern Scheduler	scheduler;
 extern Player		player;
@@ -163,7 +163,7 @@ void Dungeon::DGNGEN()
 		DROW.setRC(a_row, a_col);
 		RndDstDir(&DIR, &DST);
 		SetVFTTABOrig();  //Make sure the vertical feature table isn't overwritten from pervious new game.
-	} else {  //Is this an original game?  No:
+	} else {  //Is this an original game?  No: it's a random maze
 		switch (game.LEVEL)
 		{
 			case 0:
@@ -579,3 +579,4 @@ void Dungeon::SetLEVTABRandomMap()
 	LEVTAB[5] = rand() & 255;
 	LEVTAB[6] = rand() & 255;
 }
+

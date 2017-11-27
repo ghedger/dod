@@ -14,21 +14,21 @@ is held by Douglas J. Morgan.
 //
 // Implementation of the Scheduler class
 
-#include <unistd.h>
+using namespace std;
 #include <iostream>
 #include <fstream>
+#include <unistd.h>
 
-using namespace std;
 
-#include "sched.h"
+#include "dodsched.h"
 #include "player.h"
 #include "viewer.h"
 #include "oslink.h"
 #include "creature.h"
-#include "parser.h"
+#include "dodparser.h"
 #include "dodgame.h"
 #include "dungeon.h"
-#include "object.h"
+#include "dodobject.h"
 
 extern Object	object;
 extern RNG		rng;

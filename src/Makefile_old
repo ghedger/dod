@@ -2,6 +2,14 @@ CC      = @g++ -Wall -ansi
 CCLINK  = -lGL -lGLU -lSDL -lSDL_mixer
 CCFLAGS = -c -DLINUX -O3
 
+# Get libraries
+SDL_CONFIG ?= sdl-config
+SDL_CFLAGS = $(shell $(SDL_CONFIG) --cflags)
+SDL_LIBS = $(shell $(SDL_CONFIG) --libs)
+
+CCLINK += $(SDL_LIBS)
+CCFLAGS += $(SDL_CFLAGS)
+
 all: dod
 
 dod: creature.o dod.o dodgame.o dungeon.o enhanced.o object.o oslink.o parser.o player.o sched.o viewer.o
@@ -22,19 +30,19 @@ dungeon.o: dungeon.cpp dungeon.h
 enhanced.o: enhanced.cpp enhanced.h
 	$(CC) $(CCFLAGS) enhanced.cpp
 
-object.o: object.cpp object.h
+object.o: object.cpp dodobject.h
 	$(CC) $(CCFLAGS) object.cpp
 
 oslink.o: oslink.cpp oslink.h
 	$(CC) $(CCFLAGS) oslink.cpp
 
-parser.o: parser.cpp parser.h
+parser.o: parser.cpp dodparser.h
 	$(CC) $(CCFLAGS) parser.cpp
 
 player.o: player.cpp player.h
 	$(CC) $(CCFLAGS) player.cpp
 
-sched.o: sched.cpp sched.h
+sched.o: sched.cpp dodsched.h
 	$(CC) $(CCFLAGS) sched.cpp
 
 viewer.o: viewer.cpp viewer.h

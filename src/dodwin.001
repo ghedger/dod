@@ -133,7 +133,7 @@ SOURCE=.\object.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\object.h
+SOURCE=.\dodobject.h
 # End Source File
 # Begin Source File
 
@@ -149,7 +149,7 @@ SOURCE=.\parser.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\parser.h
+SOURCE=.\dodparser.h
 # End Source File
 # Begin Source File
 
@@ -169,7 +169,7 @@ SOURCE=.\sched.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\sched.h
+SOURCE=.\dodsched.h
 # End Source File
 # Begin Source File
 
