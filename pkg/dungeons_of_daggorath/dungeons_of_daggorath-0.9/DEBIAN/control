@@ -1,0 +1,6 @@
+Package: dungeons-of-daggorath
+Version: 0.9
+Maintainer: Greg Hedger
+Architecture: all
+Depends: libsdl1.2-dev, libsdl-mixer1.2-dev
+Description: Dungeons of Daggorath, the 1982 TRS-80 Color Computer I classic by Douglas Morgan / DynaMicro.
