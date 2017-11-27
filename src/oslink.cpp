@@ -54,9 +54,9 @@ OS_Link::OS_Link() : width(0), height(0), bpp(0), flags(0),
 	strcpy(pathSep,"\\");
 #endif
 
-	strcpy(confDir, "conf");
-	strcpy(soundDir, "sound");
-	strcpy(savedDir, "saved");
+	strcpy(confDir, "/etc/dungeons_of_daggorath/conf");
+	strcpy(soundDir, "/etc/dungeons_of_daggorath/sound");
+	strcpy(savedDir, "/etc/dungeons_of_daggorath/saved");
 	memset(gamefile,0,gamefileLen);
 }
 
@@ -946,7 +946,7 @@ void OS_Link::menu_string(char *newString, char *title, int maxLength)
 void OS_Link::loadOptFile(void)
  {
  char     inputString[80];
- char     fn[20];
+ char     fn[MAX_FILENAME_LENGTH];
  int      in;
  ifstream fin;
  char *   breakPoint;
@@ -1131,7 +1131,7 @@ void OS_Link::loadDefaults(void)
  volumeLevel = MIX_MAX_VOLUME;
  creature.creSpeedMul = 200;
  creature.UpdateCreSpeed();
- strcpy(savedDir, "saved");
+ strcpy(savedDir, "/etc/dungeons_of_daggorath/saved");
  FullScreen = true;
  width = 1024;
  creatureRegen = 5;

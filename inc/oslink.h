@@ -31,7 +31,7 @@ is held by Douglas J. Morgan.
 #include "dod.h"
 
  // Arbitrary Length of 80, maybe be changed if needed
-#define MAX_FILENAME_LENGTH 80
+#define MAX_FILENAME_LENGTH 255 
 class OS_Link
 {
 public:
@@ -50,12 +50,12 @@ public:
 	int		height;	// same for height
 	int     volumeLevel; // Volume level
 
-	char	gamefile[50];
+	char	gamefile[MAX_FILENAME_LENGTH + 1];
 	int		gamefileLen;
 	char	pathSep[2];
 	FILE *	fptr;
-	char	confDir[5];
-	char	soundDir[6];
+	char	confDir[MAX_FILENAME_LENGTH + 1];
+	char	soundDir[MAX_FILENAME_LENGTH + 1];
 	char	savedDir[MAX_FILENAME_LENGTH + 1];
 	dodBYTE	keys[256];
 	int		keylayout;	// 0 = QWERTY, 1 = Dvorak

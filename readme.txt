@@ -8,7 +8,7 @@ Dan Gendreau: Graphics, sound, and cheat enhancements
 Tim Lindner: WAV files
 Michael Spencer: Discussion Forum Host
 Louis Jordan: Inspirer of the 'Adventure Survivors'
-Greg Hedger: Optimization
+Greg Hedger (2017): Optimization, Debian packaging, build system overhaul, bug fixes
 
 ==========
 

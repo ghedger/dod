@@ -1,4 +1,13 @@
 Dungeons of Daggorath
+Debian Linux
+
+INSTALL
+-----------
+
+sudo make package
+sudo dpkg -i dungeons_of_daggorath-0.9.deb
+
+
 PC-Port Version 0.4.0
 
 ------------
