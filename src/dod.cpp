@@ -23,6 +23,9 @@ is held by Douglas J. Morgan.
 // resolve to the declarations below.  This can
 // probably be simplified with some common mechanism.
 
+#include <time.h>
+#include <signal.h>
+
 #include "dod.h"
 #include "dodgame.h"
 #include "player.h"
@@ -161,4 +164,16 @@ Mix_Chunk *Utils::LoadSound(const char *snd)
   char fn[256];
   sprintf(fn, "%s%s%s", oslink.soundDir, oslink.pathSep, snd);
   return Mix_LoadWAV(fn);
+}
+
+int Utils::msleep(unsigned long millisecs)
+{
+    struct timespec req={0};
+    time_t sec=(int)(millisecs/1000);
+    millisecs=millisecs-(sec*1000);
+    req.tv_sec=sec;
+    req.tv_nsec=millisecs*1000000L;
+    while(nanosleep(&req,&req)==-1)
+         continue;
+    return 1;
 }

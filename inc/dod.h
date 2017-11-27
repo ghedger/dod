@@ -531,6 +531,8 @@ public:
   }
 
   static Mix_Chunk *LoadSound(const char *snd);
+
+	static int msleep(unsigned long millisecs);
 };
 
 /*******************************************************************

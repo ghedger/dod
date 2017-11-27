@@ -150,7 +150,7 @@ void dodGame::COMINI()
   {
     oslink.process_events();
     ticks2 = SDL_GetTicks();
-    usleep(10000);
+    Utils::msleep(10);
   } while (ticks2 < ticks1 + viewer.prepPause);
   
   creature.NEWLVL();
@@ -166,7 +166,7 @@ void dodGame::COMINI()
     do
     {
       oslink.process_events();
-      usleep(3000000);
+      Utils::msleep(3000);
       ticks2 = SDL_GetTicks();
     } while (ticks2 < ticks1 + 3000);
   }
@@ -201,7 +201,7 @@ void dodGame::Restart()
   do
   {
     oslink.process_events();
-    usleep(2500000);
+    Utils::msleep(2500);
     ticks2 = SDL_GetTicks();
   } while (ticks2 < ticks1 + 2500);
   
@@ -251,7 +251,7 @@ void dodGame::WAIT()
       }
       scheduler.EscCheck();
     }
-    usleep(1500000);
+    Utils::msleep(1500);
     scheduler.curTime = SDL_GetTicks();
   } while (scheduler.curTime < ticks1 + 1500);
 }

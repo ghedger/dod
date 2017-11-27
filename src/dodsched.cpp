@@ -175,7 +175,7 @@ void Scheduler::SCHED()
 
       // Sleep for the difference
       if( next_time_lwm > curTime) {
-        usleep( (next_time_lwm - curTime) * 1000);
+        Utils::msleep( (next_time_lwm - curTime));
       }
 
       // Schedule next loop update for soonest next task
@@ -183,7 +183,6 @@ void Scheduler::SCHED()
       // Reset low water mark for next loop iteration
       next_time_lwm = 0xffffffff;
     }
-    //(ctr < TCBPTR) ? ++ctr : { ctr = 0; usleep(200) };
 
     if (ZFLAG != 0) // Saving or Loading
     {

@@ -522,7 +522,7 @@ bool Viewer::ShowFade(int fadeMode)
         while(SDL_PollEvent(&event)) ; // clear event buffer
         return false;
       }
-      usleep(buzzStep * 1000);
+      Utils::msleep(buzzStep);
       ticks2 = SDL_GetTicks();
     } while (ticks2 < ticks1 + buzzStep);
   }
@@ -542,7 +542,7 @@ bool Viewer::ShowFade(int fadeMode)
       while(SDL_PollEvent(&event)) ; // clear event buffer
       return false;
     }
-    usleep(1000);
+    Utils::msleep(1);
   }
 
   // show message
@@ -579,7 +579,7 @@ bool Viewer::ShowFade(int fadeMode)
         while(SDL_PollEvent(&event)) ; // clear event buffer
         return false;
       }
-      usleep(midPause * 1000); 
+      Utils::msleep(midPause); 
       ticks2 = SDL_GetTicks();
     } while (ticks2 < ticks1 + midPause);
 
@@ -604,7 +604,7 @@ bool Viewer::ShowFade(int fadeMode)
         while(SDL_PollEvent(&event)) ; // clear event buffer
         return false;
       }
-      usleep(1000);
+      Utils::msleep(1);
     }
 
     // start buzz again
@@ -635,7 +635,7 @@ bool Viewer::ShowFade(int fadeMode)
           while(SDL_PollEvent(&event)) ; // clear event buffer
           return false;
         }
-        usleep(buzzStep * 1000);
+        Utils::msleep(buzzStep);
         ticks2 = SDL_GetTicks();
       } while (ticks2 < ticks1 + buzzStep);
     }
@@ -705,7 +705,7 @@ bool Viewer::draw_fade()
       Mix_PlayChannel(fadChannel, creature.kaboom, 0);
       while (Mix_Playing(fadChannel) == 1)
       {
-        usleep(1000);
+        Utils::msleep(1);
         // Call keyboard routine ???
       }
     
@@ -734,7 +734,7 @@ bool Viewer::draw_fade()
       Mix_PlayChannel(fadChannel, creature.kaboom, 0);
       while (Mix_Playing(fadChannel) == 1)
       {
-        usleep(1000);
+        Utils::msleep(1);
         // Call keyboard routine ???
       }
     
@@ -789,7 +789,7 @@ void Viewer::enough_fade()
       Mix_PlayChannel(fadChannel, creature.kaboom, 0);
       while (Mix_Playing(fadChannel) == 1)
       {
-        usleep(1000);
+        Utils::msleep(1);
         // Call keyboard routine ???
       }
     
@@ -819,7 +819,7 @@ void Viewer::enough_fade()
       Mix_PlayChannel(fadChannel, creature.kaboom, 0);
       while (Mix_Playing(fadChannel) == 1)
       {
-        usleep(1000);
+        Utils::msleep(1);
         // Call keyboard routine ???
       }
     
@@ -866,7 +866,7 @@ void Viewer::death_fade(int WIZ[])
       Mix_PlayChannel(fadChannel, creature.kaboom, 0);
       while (Mix_Playing(fadChannel) == 1)
       {
-        usleep(1000);
+        Utils::msleep(1);
         // Call keyboard routine ???
       }
     

@@ -377,7 +377,7 @@ int Creature::CMOVE(int task, int cidx)
             return 0;
           }
         }
-        usleep(1000);
+        Utils::msleep(1);
         scheduler.curTime = SDL_GetTicks();
       }
 
@@ -432,7 +432,7 @@ int Creature::CMOVE(int task, int cidx)
                 return 0;
               }
             }
-            usleep(1000);
+            Utils::msleep(1);
             scheduler.curTime = SDL_GetTicks();
           }
 
@@ -737,7 +737,7 @@ bool Creature::CWALK(dodBYTE dir, CCB * cr)
         {
           scheduler.CLOCK();
         }
-        usleep(1000);
+        Utils::msleep(1);
         scheduler.curTime = SDL_GetTicks();
       }
     }
