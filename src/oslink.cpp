@@ -30,15 +30,15 @@ using namespace std;
 #include "creature.h"
 #include "enhanced.h"
 
-extern Creature		creature;
-extern Object		object;
-extern Dungeon		dungeon;
-extern Player		player;
-extern Coordinate	crd;
-extern Viewer		viewer;
-extern dodGame		game;
-extern Scheduler	scheduler;
-extern Parser		parser;
+extern Creature    creature;
+extern Object    object;
+extern Dungeon    dungeon;
+extern Player    player;
+extern Coordinate  crd;
+extern Viewer    viewer;
+extern dodGame    game;
+extern Scheduler  scheduler;
+extern Parser    parser;
 
 // Constructor
 OS_Link::OS_Link() :
@@ -47,25 +47,25 @@ OS_Link::OS_Link() :
   gamefileLen(50),
  keylayout(0),
   keyLen(256),
-	audio_rate(44100),
+  audio_rate(44100),
   audio_format(AUDIO_S16),
-	audio_channels(2),
+  audio_channels(2),
   audio_buffers(512),
   bpp(0),
   flags(0)
  {
-	printf ("OS_LINK Constructor");
+  printf ("OS_LINK Constructor");
 #define MACOSX
 #ifdef MACOSX
-	strcpy(pathSep,"/");
+  strcpy(pathSep,"/");
 #else
-	strcpy(pathSep,"\\");
+  strcpy(pathSep,"\\");
 #endif
 
-	strcpy(confDir, "/etc/dungeons_of_daggorath/conf");
-	strcpy(soundDir, "/etc/dungeons_of_daggorath/sound");
-	strcpy(savedDir, "/etc/dungeons_of_daggorath/saved");
-	memset(gamefile,0,gamefileLen);
+  strcpy(confDir, "/etc/dungeons_of_daggorath/conf");
+  strcpy(soundDir, "/etc/dungeons_of_daggorath/sound");
+  strcpy(savedDir, "/etc/dungeons_of_daggorath/saved");
+  memset(gamefile,0,gamefileLen);
 }
 
 // This routine will eventually need updated to allow
@@ -76,254 +76,254 @@ OS_Link::OS_Link() :
 // uses defaults set by loadDefaults function (1024x768)
 void OS_Link::init()
 {
-	printf("Starting OS_Link::init()\n");
-	loadOptFile();
+  printf("Starting OS_Link::init()\n");
+  loadOptFile();
 
-	Uint32 ticks1, ticks2;
-	const SDL_VideoInfo * info = '\0';
-	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_AUDIO) < 0)
-	{
-		fprintf(stderr, "Video initialization failed: %s\n", SDL_GetError());
-		quitSDL(1);
-	}
+  Uint32 ticks1, ticks2;
+  const SDL_VideoInfo * info = '\0';
+  if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_AUDIO) < 0)
+  {
+    fprintf(stderr, "Video initialization failed: %s\n", SDL_GetError());
+    quitSDL(1);
+  }
 
-	if(Mix_OpenAudio(audio_rate, audio_format, audio_channels, audio_buffers))
-	{
-		fprintf(stderr, "Unable to open audio!\n");
-		quitSDL(1);
-	}
+  if(Mix_OpenAudio(audio_rate, audio_format, audio_channels, audio_buffers))
+  {
+    fprintf(stderr, "Unable to open audio!\n");
+    quitSDL(1);
+  }
 
-	creature.LoadSounds();
-	object.LoadSounds();
-	scheduler.LoadSounds();
-	player.LoadSounds();
+  creature.LoadSounds();
+  object.LoadSounds();
+  scheduler.LoadSounds();
+  player.LoadSounds();
 
-	Mix_AllocateChannels(4);
-	Mix_Volume(-1, MIX_MAX_VOLUME);
-	
-	info = SDL_GetVideoInfo();
-	if(!info)
-	{
-		fprintf(stderr, "Video query failed: %s\n", SDL_GetError());
-		quitSDL(1);
-	}
-	bpp = info->vfmt->BitsPerPixel;
-	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
-	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 5);
-	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
-	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
-	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-	flags = SDL_OPENGL;
+  Mix_AllocateChannels(4);
+  Mix_Volume(-1, MIX_MAX_VOLUME);
+  
+  info = SDL_GetVideoInfo();
+  if(!info)
+  {
+    fprintf(stderr, "Video query failed: %s\n", SDL_GetError());
+    quitSDL(1);
+  }
+  bpp = info->vfmt->BitsPerPixel;
+  SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
+  SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 5);
+  SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
+  SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
+  SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+  flags = SDL_OPENGL;
 
-	changeVideoRes(width); // All changing video res code was moved here
-	SDL_WM_SetCaption("Dungeons of Daggorath", "");
+  changeVideoRes(width); // All changing video res code was moved here
+  SDL_WM_SetCaption("Dungeons of Daggorath", "");
 
-	memset(keys, parser.C_SP, keyLen);
+  memset(keys, parser.C_SP, keyLen);
 
-	if (keylayout == 0) // QWERTY
-	{
-		keys[SDLK_a] = 'A';
-		keys[SDLK_b] = 'B';
-		keys[SDLK_c] = 'C';
-		keys[SDLK_d] = 'D';
-		keys[SDLK_e] = 'E';
-		keys[SDLK_f] = 'F';
-		keys[SDLK_g] = 'G';
-		keys[SDLK_h] = 'H';
-		keys[SDLK_i] = 'I';
-		keys[SDLK_j] = 'J';
-		keys[SDLK_k] = 'K';
-		keys[SDLK_l] = 'L';
-		keys[SDLK_m] = 'M';
-		keys[SDLK_n] = 'N';
-		keys[SDLK_o] = 'O';
-		keys[SDLK_p] = 'P';
-		keys[SDLK_q] = 'Q';
-		keys[SDLK_r] = 'R';
-		keys[SDLK_s] = 'S';
-		keys[SDLK_t] = 'T';
-		keys[SDLK_u] = 'U';
-		keys[SDLK_v] = 'V';
-		keys[SDLK_w] = 'W';
-		keys[SDLK_x] = 'X';
-		keys[SDLK_y] = 'Y';
-		keys[SDLK_z] = 'Z';
-		keys[SDLK_BACKSPACE] = parser.C_BS;
-		keys[SDLK_RETURN] = parser.C_CR;
-		keys[SDLK_SPACE] = parser.C_SP;
-	}
-	else if (keylayout == 1) // Dvorak
-	{
-		keys[SDLK_a] = 'A';
-		keys[SDLK_n] = 'B';
-		keys[SDLK_i] = 'C';
-		keys[SDLK_h] = 'D';
-		keys[SDLK_d] = 'E';
-		keys[SDLK_y] = 'F';
-		keys[SDLK_u] = 'G';
-		keys[SDLK_j] = 'H';
-		keys[SDLK_g] = 'I';
-		keys[SDLK_c] = 'J';
-		keys[SDLK_v] = 'K';
-		keys[SDLK_p] = 'L';
-		keys[SDLK_m] = 'M';
-		keys[SDLK_l] = 'N';
-		keys[SDLK_s] = 'O';
-		keys[SDLK_r] = 'P';
-		keys[SDLK_x] = 'Q';
-		keys[SDLK_o] = 'R';
-		keys[SDLK_SEMICOLON] = 'S';
-		keys[SDLK_k] = 'T';
-		keys[SDLK_f] = 'U';
-		keys[SDLK_PERIOD] = 'V';
-		keys[SDLK_COMMA] = 'W';
-		keys[SDLK_b] = 'X';
-		keys[SDLK_t] = 'Y';
-		keys[SDLK_SLASH] = 'Z';
-		keys[SDLK_BACKSPACE] = parser.C_BS;
-		keys[SDLK_RETURN] = parser.C_CR;
-		keys[SDLK_SPACE] = parser.C_SP;
-	}
+  if (keylayout == 0) // QWERTY
+  {
+    keys[SDLK_a] = 'A';
+    keys[SDLK_b] = 'B';
+    keys[SDLK_c] = 'C';
+    keys[SDLK_d] = 'D';
+    keys[SDLK_e] = 'E';
+    keys[SDLK_f] = 'F';
+    keys[SDLK_g] = 'G';
+    keys[SDLK_h] = 'H';
+    keys[SDLK_i] = 'I';
+    keys[SDLK_j] = 'J';
+    keys[SDLK_k] = 'K';
+    keys[SDLK_l] = 'L';
+    keys[SDLK_m] = 'M';
+    keys[SDLK_n] = 'N';
+    keys[SDLK_o] = 'O';
+    keys[SDLK_p] = 'P';
+    keys[SDLK_q] = 'Q';
+    keys[SDLK_r] = 'R';
+    keys[SDLK_s] = 'S';
+    keys[SDLK_t] = 'T';
+    keys[SDLK_u] = 'U';
+    keys[SDLK_v] = 'V';
+    keys[SDLK_w] = 'W';
+    keys[SDLK_x] = 'X';
+    keys[SDLK_y] = 'Y';
+    keys[SDLK_z] = 'Z';
+    keys[SDLK_BACKSPACE] = parser.C_BS;
+    keys[SDLK_RETURN] = parser.C_CR;
+    keys[SDLK_SPACE] = parser.C_SP;
+  }
+  else if (keylayout == 1) // Dvorak
+  {
+    keys[SDLK_a] = 'A';
+    keys[SDLK_n] = 'B';
+    keys[SDLK_i] = 'C';
+    keys[SDLK_h] = 'D';
+    keys[SDLK_d] = 'E';
+    keys[SDLK_y] = 'F';
+    keys[SDLK_u] = 'G';
+    keys[SDLK_j] = 'H';
+    keys[SDLK_g] = 'I';
+    keys[SDLK_c] = 'J';
+    keys[SDLK_v] = 'K';
+    keys[SDLK_p] = 'L';
+    keys[SDLK_m] = 'M';
+    keys[SDLK_l] = 'N';
+    keys[SDLK_s] = 'O';
+    keys[SDLK_r] = 'P';
+    keys[SDLK_x] = 'Q';
+    keys[SDLK_o] = 'R';
+    keys[SDLK_SEMICOLON] = 'S';
+    keys[SDLK_k] = 'T';
+    keys[SDLK_f] = 'U';
+    keys[SDLK_PERIOD] = 'V';
+    keys[SDLK_COMMA] = 'W';
+    keys[SDLK_b] = 'X';
+    keys[SDLK_t] = 'Y';
+    keys[SDLK_SLASH] = 'Z';
+    keys[SDLK_BACKSPACE] = parser.C_BS;
+    keys[SDLK_RETURN] = parser.C_CR;
+    keys[SDLK_SPACE] = parser.C_SP;
+  }
 
-	// Delay to wait for monitor to change modes if necessary
-	// This ought to be made more intelligent
-	ticks1 = SDL_GetTicks();
-	do
-	{
-		ticks2 = SDL_GetTicks();
-	} while (ticks2 < ticks1 + 2500);
-	game.COMINI();
- 	while (true)
-	{
-		scheduler.SCHED();
-		if (scheduler.ZFLAG == 0xFF)
-		{
-			game.LoadGame();
-			scheduler.ZFLAG = 0;
-		}
-		else
-		{
-			if (game.AUTFLG)
-			{
-				if (game.demoRestart)
-				{
-					// Restart demo
-					game.hasWon = false;
-					game.DEMOPTR = 0;
-					object.Reset();
-					creature.Reset();
-					parser.Reset();
-					player.Reset();
-					scheduler.Reset();
-					viewer.Reset();
-					dungeon.VFTPTR = 0;
-					game.COMINI();
-				}
-				else
-				{
-					// Start new game
-					game.AUTFLG = false;
-					game.Restart();
-				}
-			}
-			else
-			{
-				game.Restart();
-			}
-		}
-	}
-	printf("Init complete\n");
+  // Delay to wait for monitor to change modes if necessary
+  // This ought to be made more intelligent
+  ticks1 = SDL_GetTicks();
+  do
+  {
+    ticks2 = SDL_GetTicks();
+  } while (ticks2 < ticks1 + 2500);
+  game.COMINI();
+   while (true)
+  {
+    scheduler.SCHED();
+    if (scheduler.ZFLAG == 0xFF)
+    {
+      game.LoadGame();
+      scheduler.ZFLAG = 0;
+    }
+    else
+    {
+      if (game.AUTFLG)
+      {
+        if (game.demoRestart)
+        {
+          // Restart demo
+          game.hasWon = false;
+          game.DEMOPTR = 0;
+          object.Reset();
+          creature.Reset();
+          parser.Reset();
+          player.Reset();
+          scheduler.Reset();
+          viewer.Reset();
+          dungeon.VFTPTR = 0;
+          game.COMINI();
+        }
+        else
+        {
+          // Start new game
+          game.AUTFLG = false;
+          game.Restart();
+        }
+      }
+      else
+      {
+        game.Restart();
+      }
+    }
+  }
+  printf("Init complete\n");
 }
 
 // Used to check for keystrokes and application termination
 void OS_Link::process_events()
 {
-	SDL_Event event;
-	while(SDL_PollEvent(&event))
-	{
-		switch(event.type)
-		{
-		case SDL_KEYDOWN:
-			handle_key_down(&event.key.keysym);
-			break;
-		case SDL_QUIT:
-			quitSDL(0);
-			break;
-		case SDL_VIDEOEXPOSE:
-			SDL_GL_SwapBuffers();
-			break;
-		}
-	}
+  SDL_Event event;
+  while(SDL_PollEvent(&event))
+  {
+    switch(event.type)
+    {
+    case SDL_KEYDOWN:
+      handle_key_down(&event.key.keysym);
+      break;
+    case SDL_QUIT:
+      quitSDL(0);
+      break;
+    case SDL_VIDEOEXPOSE:
+      SDL_GL_SwapBuffers();
+      break;
+    }
+  }
 }
 
 // Quits application
 void OS_Link::quitSDL(int code)
 {
-	Mix_CloseAudio();
-	SDL_Quit();
-	exit(code);
+  Mix_CloseAudio();
+  SDL_Quit();
+  exit(code);
 }
 
 // Processes key strokes.
 void OS_Link::handle_key_down(SDL_keysym * keysym)
 {
-	dodBYTE c;
-	if (viewer.display_mode == Viewer::MODE_MAP)
-	{
-		switch(keysym->sym)
-		{
-		case SDLK_ESCAPE:
-			main_menu();
-			break;
-		default:
-			viewer.display_mode = Viewer::MODE_3D;
-			--viewer.UPDATE;
-			parser.KBDPUT(32); // This is a (necessary ???) hack.
-			break;
-		}
+  dodBYTE c;
+  if (viewer.display_mode == Viewer::MODE_MAP)
+  {
+    switch(keysym->sym)
+    {
+    case SDLK_ESCAPE:
+      main_menu();
+      break;
+    default:
+      viewer.display_mode = Viewer::MODE_3D;
+      --viewer.UPDATE;
+      parser.KBDPUT(32); // This is a (necessary ???) hack.
+      break;
+    }
 
-	}
-	else
-	{
-		switch(keysym->sym)
-		{
-		case SDLK_RSHIFT:
-		case SDLK_LSHIFT:
-		case SDLK_RCTRL:
-		case SDLK_LCTRL:
-		case SDLK_RALT:
-		case SDLK_LALT:
-		case SDLK_RMETA:
-		case SDLK_LMETA:
-		case SDLK_LSUPER:
-		case SDLK_RSUPER:
-		case SDLK_MODE:
-		case SDLK_COMPOSE:
-		case SDLK_NUMLOCK:
-		case SDLK_CAPSLOCK:
-		case SDLK_SCROLLOCK:
-			// ignore these keys
-			return;
+  }
+  else
+  {
+    switch(keysym->sym)
+    {
+    case SDLK_RSHIFT:
+    case SDLK_LSHIFT:
+    case SDLK_RCTRL:
+    case SDLK_LCTRL:
+    case SDLK_RALT:
+    case SDLK_LALT:
+    case SDLK_RMETA:
+    case SDLK_LMETA:
+    case SDLK_LSUPER:
+    case SDLK_RSUPER:
+    case SDLK_MODE:
+    case SDLK_COMPOSE:
+    case SDLK_NUMLOCK:
+    case SDLK_CAPSLOCK:
+    case SDLK_SCROLLOCK:
+      // ignore these keys
+      return;
 
-		case SDLK_ESCAPE:
-			main_menu();   // Enter the meta-menu routine
+    case SDLK_ESCAPE:
+      main_menu();   // Enter the meta-menu routine
                         return;
 
-//		case SDLK_EXCLAIM: c = '!'; break;
-//		case SDLK_LESS: c = '<'; break;
-//		case SDLK_GREATER: c = '>'; break;
-//		case SDLK_QUESTION: c = '?'; break;
-//		case SDLK_UNDERSCORE: c = '_'; break;
-//		case SDLK_PERIOD: c = '.'; break;
-//		case SDLK_LEFTBRACKET: c = '{'; break;
-//		case SDLK_RIGHTBRACKET: c = '}'; break;
+//    case SDLK_EXCLAIM: c = '!'; break;
+//    case SDLK_LESS: c = '<'; break;
+//    case SDLK_GREATER: c = '>'; break;
+//    case SDLK_QUESTION: c = '?'; break;
+//    case SDLK_UNDERSCORE: c = '_'; break;
+//    case SDLK_PERIOD: c = '.'; break;
+//    case SDLK_LEFTBRACKET: c = '{'; break;
+//    case SDLK_RIGHTBRACKET: c = '}'; break;
 
-		default:
-			c = keys[keysym->sym];
-			break;
-		}
-		parser.KBDPUT(c);
-	}
+    default:
+      c = keys[keysym->sym];
+      break;
+    }
+    parser.KBDPUT(c);
+  }
 }
 
 /*********************************************************
@@ -354,32 +354,32 @@ bool OS_Link::main_menu()
       switch(event.key.keysym.sym)
         {
         case SDLK_RETURN:
-	 end = menu_return(col, row, mainMenu);
+   end = menu_return(col, row, mainMenu);
 
-	   // Used for Wizard fade functions, if it's a new game, it will trigger a key press
-	 if(col == FILE_MENU_SWITCH && row == FILE_MENU_NEW)
-	   return true;
+     // Used for Wizard fade functions, if it's a new game, it will trigger a key press
+   if(col == FILE_MENU_SWITCH && row == FILE_MENU_NEW)
+     return true;
 
          break;
         case SDLK_UP:
-	 (row < 1) ? row = mainMenu.getMenuSize(col) - 1 : row--;
+   (row < 1) ? row = mainMenu.getMenuSize(col) - 1 : row--;
          break;
         case SDLK_DOWN:
-	 (row > mainMenu.getMenuSize(col) - 2) ? row = 0 : row++;
+   (row > mainMenu.getMenuSize(col) - 2) ? row = 0 : row++;
          break;
         case SDLK_LEFT:
-	 (col < 1) ? col = NUM_MENU - 1 : col--;
-	 row = 0;
+   (col < 1) ? col = NUM_MENU - 1 : col--;
+   row = 0;
          break;
         case SDLK_RIGHT:
-	 (col > 1) ? col = 0 : col++;
-	 row = 0;
-	 break;
+   (col > 1) ? col = 0 : col++;
+   row = 0;
+   break;
         case SDLK_ESCAPE:
          end = true;
-	 break;
+   break;
         default:
-	 break;
+   break;
         }
       viewer.drawMenu(mainMenu, col, row);
       break;
@@ -634,12 +634,12 @@ switch(menu_id)
 
    switch(menu_list(menu_id * 5, item + 2, Menu.getMenuItem(menu_id, item), menuList, 2))
     {
-	case 0:
-		game.RandomMaze = true;
-		break;
-	case 1:
-		game.RandomMaze = false;
-	    break;
+  case 0:
+    game.RandomMaze = true;
+    break;
+  case 1:
+    game.RandomMaze = false;
+      break;
     default:
      return false;
      break;
@@ -767,19 +767,19 @@ int OS_Link::menu_list(int x, int y, const char *title, const char *list[], int 
          break;
 
         case SDLK_UP:
-	 (currentChoice < 1) ? currentChoice = listSize - 1 : currentChoice--;
+   (currentChoice < 1) ? currentChoice = listSize - 1 : currentChoice--;
          break;
 
         case SDLK_DOWN:
-	 (currentChoice > listSize - 2) ? currentChoice = 0 : currentChoice++;
+   (currentChoice > listSize - 2) ? currentChoice = 0 : currentChoice++;
          break;
 
         case SDLK_ESCAPE:
-	 return(-1);
-	 break;
+   return(-1);
+   break;
 
         default:
-	 break;
+   break;
         }
       break;
      case SDL_QUIT:
@@ -834,20 +834,20 @@ int OS_Link::menu_scrollbar(const char *title, int min, int max, int current)
          break;
 
         case SDLK_LEFT:
-	 (current > newMin) ? current -= increment : current = newMin;
+   (current > newMin) ? current -= increment : current = newMin;
          break;
 
         case SDLK_RIGHT:
-	 (current < newMax) ? current += increment : current = newMax;
+   (current < newMax) ? current += increment : current = newMax;
          break;
 
         case SDLK_ESCAPE:
-	 return(oldvalue);
-	 break;
+   return(oldvalue);
+   break;
 
         default:
-	 break;
-	}
+   break;
+  }
        viewer.drawMenuScrollbar(title, (current - newMin) / increment);
        break;
       case SDL_QUIT:
@@ -911,29 +911,29 @@ void OS_Link::menu_string(char *newString, const char *title, size_t maxLength)
           break;
 
         case SDLK_BACKSPACE:
-	case SDLK_LEFT:
-	 if(strlen(newString) > 0)
-	  {
-	  *(newString + strlen(newString) - 1) = '\0';
+  case SDLK_LEFT:
+   if(strlen(newString) > 0)
+    {
+    *(newString + strlen(newString) - 1) = '\0';
           viewer.drawMenuStringTitle(title);  // Update with the new word
           viewer.drawMenuString(newString);
-	  }
+    }
          break;
 
         case SDLK_ESCAPE:
          *(newString) = '\0';
-	 return;
-	 break;
+   return;
+   break;
 
         default:
-	 if(strlen(newString) < maxLength)
-	  {
-	  *(newString + strlen(newString) + 1) = '\0';
-	  *(newString + strlen(newString)) = keys[event.key.keysym.sym];
+   if(strlen(newString) < maxLength)
+    {
+    *(newString + strlen(newString) + 1) = '\0';
+    *(newString + strlen(newString)) = keys[event.key.keysym.sym];
           viewer.drawMenuStringTitle(title);  // Update with the new word
           viewer.drawMenuString(newString);
-	  }
-	 break;
+    }
+   break;
         }
       break;
      case SDL_QUIT:
@@ -963,7 +963,7 @@ void OS_Link::loadOptFile(void)
  loadDefaults(); // In case some variables aren't in the opts file, and if no file exists
 
  sprintf(fn, "%s%s%s", confDir, pathSep, "opts.ini");
-	
+  
  fin.open(fn);
  if (!fin)
  {
