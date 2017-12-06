@@ -2,7 +2,6 @@
 //
 // Copyright (C) 2017 Greg Hedger
 
-
 #include <string>
 #include <unistd.h>
 #include <sys/types.h>
@@ -14,11 +13,7 @@
 
 #include "dodconfig.h"
 
-
 using namespace std;
-
-
-
 
 DODConfig::DODConfig()
 {
@@ -35,6 +30,7 @@ void DODConfig::ChangeToHomeDirectory()
 	if(chdir(GetHomePath().c_str()))
 	{
 		// TODO: LOG ERROR
+    cout << "Cannot switch to home directory ('" << GetHomePath().c_str() << "')" << std::endl;
 	}
 }
 
@@ -42,7 +38,8 @@ void DODConfig::ChangeToUserDirectory()
 {
 	if(chdir((GetHomePath() + USER_DIRECTORY_NAME).c_str()))
 	{
-		// TODO: LOG ERROR
+
+    cout << "Cannot switch to home directory ('" << GetHomePath().c_str() << "')" << std::endl;
 	}
 }
 
@@ -112,18 +109,6 @@ bool DODConfig::ValidateUserDirectory()
 		cout << "Creating directory\n";
 	}
 	return bResult;
-}
-
-// BuildUserDirectory
-// Builds out user directory structure for congiruation files
-// Entry: -
-// Exit: true == success
-bool DODConfig::BuildUserDirectory()
-{
-	bool bRet = true;       // assume success
-
-
-	return bRet;
 }
 
 std::string DODConfig::GetInstallPath()

@@ -22,12 +22,6 @@ class DODConfig
 	protected:
 		std::string GetHomePath();
 		std::string GetInstallPath();
-#if 0
-		void PopulateInstallPath();
-		bool CreateDirectory();
-		bool CopyFile(const char * src, const char * dest);
-#endif
-		bool BuildUserDirectory();
 	private:
 		std::string m_optsFilePath;
 
